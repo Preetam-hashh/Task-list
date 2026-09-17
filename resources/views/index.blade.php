@@ -10,6 +10,8 @@
     <div>
       <a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->title }}</a>
     </div>
+
+    
   @empty
     <div>There are no tasks!</div>
   @endforelse
@@ -17,4 +19,8 @@
 
 
 </div>
+
+<div>
+      <a href="{{ route('tasks.create') }}">Click this for adding task</a>
+    </div>
 @endsection

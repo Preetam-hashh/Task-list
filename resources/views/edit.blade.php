@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Add Task')
+@section('title', 'Edit Task')
+@section('content')
 
 @section('styles')
 
@@ -38,14 +39,13 @@
 
 @endsection
 
-@section('content')
-
-<form action="{{ route('tasks.store') }}" method="POST">
+<form method="POST" action="{{ route('tasks.update',['id'=>$task->id]) }}" >
 
     @csrf {{-- ** This is very important ** This is a middleware --}}
+    @method('PUT')  {{--// method spoofing --}}
     <div class="form-container">
         <div class=""><label for="title"> Title </label>
-            <input type="text" name="title" id="title" value="{{ old('title') }}">
+            <input type="text" name="title" id="title" value="{{ $task->title }}">
             @error('title')
                 <p class="error-message">* {{ $message }}</p>
             @enderror
@@ -57,16 +57,17 @@
             @error('description')
                 <p class="error-message">* {{ $message }}</p>
             @enderror
-            <input type="text" name="description" id="description" value="{{ old('long_description') }}">
+            <input type="text" name="description" id="description" rows="5" value="{{ $task->description }}">
         </div>
 
         <div>
             <label for="long_description">Long Description</label>
-            <input type="textarea" name="long_description" id="long_description" rows="3" value="{{ old('long_description') }}">
+            <input type="text" name="long_description" id="long_description" rows="5" value="{{ $task->long_description }}">        
+        
         </div>
 
 
-        <button type="submit">Add Task</button>
+        <button type="submit">Edit Task</button>
 
     </div>
 
