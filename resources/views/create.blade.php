@@ -2,8 +2,11 @@
 
 @section('title', 'Add Task')
 @section('content')
+
+@section('styles')
+
 <style>
-    .form-container{
+    .form-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -18,38 +21,54 @@
 
     }
 
-    .form-container input{
+    .form-container input {
         width: 100%;
         box-sizing: border-box;
         padding: 8px;
         border: 1px solid #000;
         border-radius: 4px;
     }
-    
-  </style>
-    <form action="{{ route('tasks.store') }}" method="POST">
 
-        @csrf {{-- ** This is very important ** This is a middleware --}}
-        <div class="form-container">
-            <div class=""><label for="title"> Title </label>
-            <input type="text" name="title" id="title"></div>
-            
+    .error-message{
+        background-color: red;
+        border:1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+    }
+</style>
 
-            <div>
-                <label for="description">Description</label>
-                <input type="text" name="description" id="description">
-            </div>
+@endsection
 
-            <div>
-                <label for="long_description">Long Description</label>
-                <input type="textarea" name="long_description" id="long_description" rows="3">
-            </div>
+<form action="{{ route('tasks.store') }}" method="POST">
 
-
-            <button type="submit">Add Task</button>
-
+    @csrf {{-- ** This is very important ** This is a middleware --}}
+    <div class="form-container">
+        <div class=""><label for="title"> Title </label>
+            <input type="text" name="title" id="title">
+            @error('title')
+                <p class="error-message">* {{ $message }}</p>
+            @enderror
         </div>
 
-    </form>
+
+        <div>
+            <label for="description">Description</label>
+            @error('description')
+                <p class="error-message">* {{ $message }}</p>
+            @enderror
+            <input type="text" name="description" id="description">
+        </div>
+
+        <div>
+            <label for="long_description">Long Description</label>
+            <input type="textarea" name="long_description" id="long_description" rows="3">
+        </div>
+
+
+        <button type="submit">Add Task</button>
+
+    </div>
+
+</form>
 
 @endsection
